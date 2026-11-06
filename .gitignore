@@ -1,0 +1,32 @@
+# --- Build output ---
+.pio/
+build/
+*.elf
+*.map
+*.o
+*.a
+
+# Firmware binaries belong to GitHub Releases, not to the repo
+*.bin
+!hardware/**/*.bin
+
+# --- Secrets & local config ---
+secrets.h
+**/secrets.h
+*.local.h
+.env
+*.pem
+*.key
+
+# --- Editors / OS ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# --- Web build ---
+node_modules/
+web/dist/
+*.gz

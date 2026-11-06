@@ -4,20 +4,38 @@ FLYGLINJE – A DIY ESP32-powered project. Built with curiosity, questionable en
 
 FLYGLINJE turns the IKEA **KORTLINJE** alarm clock into a **live flight tracker** – without giving up what the clock already does. An ESP32 takes over the three display drivers, the buttons and the buzzer. Everything is set up in the browser; firmware updates arrive over the air.
 
-> **Status:** work in progress. Builds run on real hardware, but expect rough edges.
-> Current firmware: **v0.7.0** · Build guide (German): [bastelbyra.de/umbau](https://bastelbyra.de/umbau/)
+> **Status:** work in progress, built as a birthday present. Runs on real hardware, but expect rough edges.
+> Current firmware: **v0.8.5 „Quartett“** · Model FL-0340 · by [Pixel & Propeller](https://bastelbyra.de)
+> Build guide and full release notes (German): [bastelbyra.de/umbau](https://bastelbyra.de/umbau/) · [bastelbyra.de/firmware](https://bastelbyra.de/firmware/)
 
 ---
 
-## Features
+## What it does
 
-- **Flight mode** – shows nearby flights on the clock display
-- **Clock & alarms** – two alarms, snooze per alarm, night mode, adjustable brightness (1–8)
-- **Web interface** – setup, settings, test page with live button voltages, status-dot mapping
-- **Over-the-air updates** – the clock fetches new releases from bastelbyra.de; automatic rollback if a new version fails to boot
-- **Security by default** – random setup password, PBKDF2 login, AES-256-GCM encrypted secrets, Content Security Policy, IDE-OTA disabled
-- **Diagnostics** – reason of the last reboot plus a reboot history pointing to where a crash happened
-- **Pong for two** – because why not
+**Flights**
+- Flights within an adjustable radius: flight number, route, altitude, distance, type and heading on the 42 × 9 dot matrix
+- Special aircraft get their own page – emergencies, radio failure, rescue flights, military, A380, Jumbo, Beluga …
+- „Über dir!“ when a plane passes almost straight overhead
+- Track a single flight anywhere in the world and get a sound when it lands
+- Flight statistics: today, yesterday, total, records
+
+**Collecting & playing**
+- Collection album with 176 aircraft types, 87 airlines and every airport seen – five rarity levels, silver and gold cards, photos and facts
+- 28 badges to unlock
+- Snake, Pong and an aircraft top-trumps game („Quartett“) for two – the phone is the controller
+
+**Clock**
+- Two alarms with weekdays, snooze per alarm, wake-up light, weather after the alarm
+- Day and night profile (switch by time or sunset), brightness 1–8
+- Weather mode, severe-weather warnings (DWD), ISS passes computed on the clock itself (SGP4)
+- Kitchen timer, special days with countdown, birthday song
+
+**Under the hood**
+- Web interface for setup and all settings, reachable only from the home network
+- Over-the-air updates from bastelbyra.de with automatic rollback
+- Encrypted secrets (AES-256-GCM), PBKDF2 login, random setup password per clock, growing lockout after wrong passwords
+- Reboot diagnostics: reason and place of the last crash
+- Settings backup and restore as a file
 
 ## Hardware
 
@@ -29,42 +47,37 @@ FLYGLINJE turns the IKEA **KORTLINJE** alarm clock into a **live flight tracker*
 | Thin wire, pin headers, Dupont cables | headers make the ESP removable |
 | *optional:* AHT20 / SHT30, DS3231 | temperature/humidity, real-time clock via I²C |
 
-Wiring overview: **[docs/wiring.md](docs/wiring.md)**
+![Wiring overview](hardware/images/verkabelung-alle-kabel.png)
+
+Details: **[docs/wiring.md](docs/wiring.md)**
 
 ## Quick start
 
-1. **Rebuild the clock** following [docs/wiring.md](docs/wiring.md) (detailed photo guide on [bastelbyra.de/umbau](https://bastelbyra.de/umbau/)).
-2. **Flash the complete image** from the [latest release](../../releases/latest):
-   ```bash
-   esptool.py --chip esp32 write_flash 0x0 flyglinje-vX.Y.Z-komplett.bin
-   ```
-   Details: [docs/flashing.md](docs/flashing.md)
-<!-- TODO vor Veröffentlichung prüfen: Name des Einrichtungs-WLANs, wo das Passwort angezeigt wird, IP -->
-3. **Connect** to the setup Wi-Fi `FLYGLINJE-xxxx`. The random setup password is shown on the clock display.
-4. **Open** `http://192.168.4.1`, enter your Wi-Fi and location – done.
+1. **Flash first, solder later.** Put the firmware on the bare ESP32 before it goes into the clock: download `flyglinje-vX.Y.Z-komplett.bin` from the [latest release](../../releases/latest) and write it to address `0x0` – see [docs/flashing.md](docs/flashing.md).
+2. **Rebuild the clock** following [docs/wiring.md](docs/wiring.md) (photo guide on [bastelbyra.de/umbau](https://bastelbyra.de/umbau/)).
+3. **Set up** via the clock's setup Wi-Fi and the web interface. <!-- TODO: WLAN-Name, Anzeige des Einrichtungs-Passworts und Adresse aus dem Quellcode übernehmen -->
 
 From then on updates are installed from the web interface (System › Update).
 
 ## Repository layout
 
 ```
-firmware/   ESP32 firmware source
-web/        web interface sources (served gzipped from the ESP)
+firmware/   ESP32 firmware source (Arduino)
 docs/       wiring, flashing, release process
-hardware/   photos, wiring graphics
+hardware/   wiring graphics
+tools/      helper scripts (changelog from the website)
 ```
 
 ## Safety
 
 You are opening a mains-powered device and soldering on its board. Unplug it before working on it, measure every wire before switching on, and never connect USB to the ESP while the clock is powered without the diode in `VIN`. You do this at your own risk.
 
-## Credits
+## Credits & data
 
-This project would not exist without the people who opened the KORTLINJE first. See **[CREDITS.md](CREDITS.md)**.
+FLYGLINJE stands on the work of others – fellow tinkerers who opened the KORTLINJE first, and open data services from ADS-B volunteers to OpenStreetMap. Full list: **[CREDITS.md](CREDITS.md)**.
 
 ## License
 
-[MIT](LICENSE) – for the code and documentation in this repository. Third-party material is listed in [CREDITS.md](CREDITS.md).
+[MIT](LICENSE) for the code and documentation in this repository. Third-party data and material keep their own licenses, see [CREDITS.md](CREDITS.md).
 
-FLYGLINJE is a hobby project and not affiliated with or endorsed by IKEA. KORTLINJE is a product name of Inter IKEA Systems B.V.
-
+FLYGLINJE is a private hobby project and not affiliated with or endorsed by IKEA. IKEA and KORTLINJE are trademarks of Inter IKEA Systems B.V.

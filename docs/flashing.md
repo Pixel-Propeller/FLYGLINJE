@@ -2,12 +2,14 @@
 
 There are two ways to get FLYGLINJE onto an ESP32.
 
+> **Rule of thumb:** flash the bare ESP32 *before* it gets soldered into the clock. Then you know the board works before you pick up the iron.
+
 ## A) First install – complete image (recommended)
 
 Every release contains `flyglinje-vX.Y.Z-komplett.bin`: bootloader, partition table and app merged into one file, written at address `0x0`.
 
 1. Install esptool: `pip install esptool`
-2. Connect the ESP32 via USB. **Disconnect `VIN` from the clock** (or unplug the clock) while USB is connected, unless the 1N5817 diode is fitted.
+2. Connect the ESP32 via USB. If it is already in the clock: **unplug the clock's power cable** first.
 3. Erase and flash:
    ```bash
    esptool.py --chip esp32 erase_flash

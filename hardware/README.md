@@ -1,5 +1,8 @@
 # Hardware
 
-Photos and wiring graphics for the KORTLINJE conversion. The wiring itself is described in [docs/wiring.md](../docs/wiring.md).
+| File | Content |
+|---|---|
+| `images/verkabelung-alle-kabel.png` | all wires from the clock to the ESP32 (2000 px) |
+| `images/verkabelung-alle-kabel-gross.png` | same, large for printing (3450 px) |
 
-<!-- TODO: Grafiken aus assets/img/umbau/ (bastelbyra.de) nach hardware/images/ übernehmen -->
+The wiring is described in [docs/wiring.md](../docs/wiring.md), the photo guide is on [bastelbyra.de/umbau](https://bastelbyra.de/umbau/).

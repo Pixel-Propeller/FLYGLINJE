@@ -4,33 +4,36 @@ Checkliste für jede neue Version. Version im Format `vMAJOR.MINOR.PATCH`, z. B.
 
 ## 1. Version vorbereiten
 
-- [ ] Versionsnummer in der Firmware erhöhen <!-- TODO: Datei/Konstante eintragen, sobald der Code im Repo ist -->
-- [ ] `CHANGELOG.md`: Abschnitt `[Unreleased]` in `[X.Y.Z] – JJJJ-MM-TT` umbenennen, neuen leeren `[Unreleased]` darüber anlegen, Vergleichslinks unten ergänzen
-- [ ] Handbuch/Webseite anpassen, falls sich Webinterface oder Tasten geändert haben (Handbuch folgt dem Webinterface)
+- [ ] `firmware/FLYGLINJE/Config.h`: `#define FW_VERSION  "X.Y.Z"`
+- [ ] Webseite `inc/firmware.php`: neuen Block oben in `RELEASES` (Version, Datum, Spitzname, Punkte)
+- [ ] Webseite `inc/config.php`: `FW_VERSION` und `FW_DATE`
+- [ ] Changelog neu erzeugen:
+  ```bash
+  python3 tools/changelog_from_site.py ~/Desktop/GEschenk/inc/firmware.php > CHANGELOG.md
+  ```
+- [ ] Handbuch prüfen, falls sich Webinterface oder Tasten geändert haben (Handbuch folgt dem Webinterface)
 
 ## 2. Bauen
 
-Es entstehen **zwei** Dateien:
+Siehe [firmware/README.md](../firmware/README.md). Es entstehen **drei** Dateien:
 
 | Datei | Inhalt | Wofür |
 |---|---|---|
-| `flyglinje-vX.Y.Z.bin` | nur die App | OTA-Update über bastelbyra.de |
-| `flyglinje-vX.Y.Z-komplett.bin` | Bootloader + Partitionen + App | Erstinstallation per USB (`0x0`) |
+| `flyglinje-vX.Y.Z.bin` | nur die App (`FLYGLINJE.ino.bin`) | OTA-Update über bastelbyra.de |
+| `flyglinje-vX.Y.Z-komplett.bin` | `FLYGLINJE.ino.merged.bin`, FF-Ende auf 4-KB-Grenze abgeschnitten | Erstinstallation per USB an `0x0` |
+| `flyglinje-vX.Y.Z.txt` | ein Satz, was neu ist | Update-Hinweis in der Uhr |
 
-Komplett-Image zusammenfügen (Offsets für Arduino-Core ESP32 mit Standard-Partitionen – bei eigenem Partitionsschema anpassen):
+FF-Ende abschneiden:
 
 ```bash
-esptool.py --chip esp32 merge_bin -o flyglinje-vX.Y.Z-komplett.bin \
-  --flash_mode dio --flash_size 4MB \
-  0x1000  bootloader.bin \
-  0x8000  partitions.bin \
-  0xe000  boot_app0.bin \
-  0x10000 flyglinje-vX.Y.Z.bin
+python3 - <<'PY'
+d = open("FLYGLINJE.ino.merged.bin", "rb").read()
+e = (len(d.rstrip(b"\xff")) + 4095) // 4096 * 4096
+open("flyglinje-vX.Y.Z-komplett.bin", "wb").write(d[:e])
+PY
 ```
 
-Ohne `--fill-flash-size` bleibt das FF-Ende weg, die Datei ist so klein wie möglich.
-
-Prüfsummen erzeugen:
+Prüfsummen:
 
 ```bash
 shasum -a 256 flyglinje-vX.Y.Z*.bin > SHA256SUMS.txt
@@ -59,7 +62,7 @@ Auf GitHub: **Releases › Draft a new release** → Tag `vX.Y.Z` wählen.
 
 - Titel: `FLYGLINJE vX.Y.Z – <Spitzname>`
 - Text: den Abschnitt aus `CHANGELOG.md` einfügen (Vorlage unten)
-- Anhänge: `flyglinje-vX.Y.Z.bin`, `flyglinje-vX.Y.Z-komplett.bin`, `SHA256SUMS.txt`
+- Anhänge: `flyglinje-vX.Y.Z.bin`, `flyglinje-vX.Y.Z-komplett.bin`, `SHA256SUMS.txt` (die `.txt` nicht – die ist nur für die Uhr)
 
 Mit der GitHub-CLI geht alles in einem Schritt:
 
@@ -70,10 +73,9 @@ gh release create vX.Y.Z flyglinje-vX.Y.Z.bin flyglinje-vX.Y.Z-komplett.bin SHA2
 
 ## 6. Webseite bastelbyra.de
 
-- [ ] `firmware/files/` – beide `.bin` hochladen
-- [ ] `inc/config.php` und `inc/firmware.php` aktualisieren
-- [ ] einmalig: `firmware/update.php` und `firmware/files/.htaccess`
-- [ ] „Alle Releases“-Link zeigt auf `https://github.com/Pixel-Propeller/FLYGLINJE/releases` (erst sinnvoll, wenn das Repo öffentlich ist)
+- [ ] `firmware/files/` – beide `.bin` und die `.txt` hochladen, alte Version nach `inc/_backup-…/alte-firmware/`
+- [ ] `inc/config.php`, `inc/firmware.php`, ggf. `inc/code-snippets.php` hochladen
+- [ ] Sobald das Repo öffentlich ist: in `inc/config.php` `GITHUB_URL = 'https://github.com/Pixel-Propeller/FLYGLINJE'` setzen – dann erscheinen die GitHub-Links auf der Seite
 
 ---
 
