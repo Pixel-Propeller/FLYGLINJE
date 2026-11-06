@@ -37,6 +37,10 @@ FLYGLINJE turns the IKEA **KORTLINJE** alarm clock into a **live flight tracker*
 - Reboot diagnostics: reason and place of the last crash
 - Settings backup and restore as a file
 
+## Build it yourself
+
+The firmware is a plain Arduino sketch without extra libraries: [firmware/README.md](firmware/README.md).
+
 ## Hardware
 
 | Part | Notes |
@@ -55,14 +59,14 @@ Details: **[docs/wiring.md](docs/wiring.md)**
 
 1. **Flash first, solder later.** Put the firmware on the bare ESP32 before it goes into the clock: download `flyglinje-vX.Y.Z-komplett.bin` from the [latest release](../../releases/latest) and write it to address `0x0` – see [docs/flashing.md](docs/flashing.md).
 2. **Rebuild the clock** following [docs/wiring.md](docs/wiring.md) (photo guide on [bastelbyra.de/umbau](https://bastelbyra.de/umbau/)).
-3. **Set up** via the clock's setup Wi-Fi and the web interface. <!-- TODO: WLAN-Name, Anzeige des Einrichtungs-Passworts und Adresse aus dem Quellcode übernehmen -->
+3. **Set up:** join the Wi-Fi `FLYGLINJE-xxxx` – the random password scrolls across the display. The setup page opens by itself (or `http://192.168.4.1`). Afterwards the clock is at `http://flyglinje.local`, login `admin` / `admin` until you change it.
 
 From then on updates are installed from the web interface (System › Update).
 
 ## Repository layout
 
 ```
-firmware/   ESP32 firmware source (Arduino)
+firmware/   ESP32 firmware (Arduino sketch, web interface, build tools)
 docs/       wiring, flashing, release process
 hardware/   wiring graphics
 tools/      helper scripts (changelog from the website)

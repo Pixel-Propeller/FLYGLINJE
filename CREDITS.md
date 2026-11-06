@@ -24,7 +24,7 @@ All wiring graphics and descriptions in this repository are our own.
 
 | Source | Used for | Terms |
 |---|---|---|
-| [OurAirports](https://ourairports.com) | airport names, cities, countries | Public Domain |
+| [OurAirports](https://ourairports.com) | airport names, cities, countries (bundled as `webui/airports.js`) | Public Domain |
 | [Planespotters.net](https://www.planespotters.net) | aircraft photos in the album (photographer named and linked, loaded live) | rights stay with the photographers |
 | [Wikipedia / Wikimedia Commons](https://de.wikipedia.org) | facts, short descriptions, top-trumps values, fallback images | texts CC BY-SA 4.0, images as stated per file |
 | [Open-Meteo](https://open-meteo.com) | weather mode | CC BY 4.0 |
@@ -46,7 +46,9 @@ All wiring graphics and descriptions in this repository are our own.
 | Project | License |
 |---|---|
 | [Arduino core for ESP32](https://github.com/espressif/arduino-esp32) 3.0.7 | LGPL-2.1 |
-| [ESP-IDF](https://github.com/espressif/esp-idf) (Wi-Fi, mbedTLS, OTA) | Apache-2.0 |
+| [ESP-IDF](https://github.com/espressif/esp-idf) (Wi-Fi, mbedTLS, miniz, OTA) | Apache-2.0 |
+
+No further libraries – everything else is written for FLYGLINJE.
 
 ## Own work
 

@@ -15,7 +15,7 @@ Checkliste für jede neue Version. Version im Format `vMAJOR.MINOR.PATCH`, z. B.
 
 ## 2. Bauen
 
-Siehe [firmware/README.md](../firmware/README.md). Es entstehen **drei** Dateien:
+Siehe [firmware/README.md](../firmware/README.md) (nach Änderungen am Webinterface vorher `python3 firmware/tools/build_webui.py`). Es entstehen **drei** Dateien:
 
 | Datei | Inhalt | Wofür |
 |---|---|---|
