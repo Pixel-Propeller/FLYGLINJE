@@ -2,6 +2,10 @@
 
 FLYGLINJE knows nothing by itself. Everything that runs across the display comes from open services and from people who share what they know. Thank you all!
 
+## Inspiration
+
+**[kobebeefg/ikea-clock-lab](https://github.com/kobebeefg/ikea-clock-lab)** is where FLYGLINJE started. Seeing the KORTLINJE opened up, its display drivers mapped and an ESP32 in charge was the spark for this project. Huge thanks!
+
 ## Hardware research
 
 | Source | What we use | License |

@@ -4,6 +4,8 @@ FLYGLINJE – A DIY ESP32-powered project. Built with curiosity, questionable en
 
 FLYGLINJE turns the IKEA **KORTLINJE** alarm clock into a **live flight tracker** – without giving up what the clock already does. An ESP32 takes over the three display drivers, the buttons and the buzzer. Everything is set up in the browser; firmware updates arrive over the air.
 
+> 💡 **Inspired by [kobebeefg/ikea-clock-lab](https://github.com/kobebeefg/ikea-clock-lab)** – the project that first opened the KORTLINJE, mapped its display drivers and showed how to wire in an ESP32. FLYGLINJE would not exist without it. Thank you!
+
 > **Status:** work in progress, built as a birthday present. Runs on real hardware, but expect rough edges.
 > Current firmware: **v0.8.5 „Quartett“** · Model FL-0340 · by [Pixel & Propeller](https://bastelbyra.de)
 > Build guide and full release notes (German): [bastelbyra.de/umbau](https://bastelbyra.de/umbau/) · [bastelbyra.de/firmware](https://bastelbyra.de/firmware/)
@@ -78,7 +80,13 @@ You are opening a mains-powered device and soldering on its board. Unplug it bef
 
 ## Credits & data
 
-FLYGLINJE stands on the work of others – fellow tinkerers who opened the KORTLINJE first, and open data services from ADS-B volunteers to OpenStreetMap. Full list: **[CREDITS.md](CREDITS.md)**.
+FLYGLINJE stands on the work of others:
+
+- **[kobebeefg/ikea-clock-lab](https://github.com/kobebeefg/ikea-clock-lab)** – the inspiration for this whole project: how the KORTLINJE works inside and how to take it over with an ESP32
+- **[VIPnytt/Kortlinje](https://github.com/VIPnytt/Kortlinje)** – connector pinouts and board signals
+- open data services, from ADS-B volunteers to OpenStreetMap
+
+Full list: **[CREDITS.md](CREDITS.md)**.
 
 ## License
 
